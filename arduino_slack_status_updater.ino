@@ -26,7 +26,6 @@ void print_wakeup_reason(){
 void setup() {
   M5.begin();
   M5.Power.begin();
-  Serial.begin(115200);
 
   ++bootCount;
   Serial.println("Boot number:" + String(bootCount));
