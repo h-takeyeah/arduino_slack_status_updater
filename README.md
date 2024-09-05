@@ -18,3 +18,6 @@ extension may be required. override var like this: `make -e ARDUINO=arduino-cli.
 
 ### find board
 connect your board and run `make listboard`. port.address is the port
+
+## notes
+push A button to reset and exit deep-sleep
