@@ -23,20 +23,6 @@ void print_wakeup_reason(){
   }
 }
 
-void setup() {
-  M5.begin();
-  M5.Power.begin();
-
-  ++bootCount;
-  Serial.println("Boot number:" + String(bootCount));
-
-  print_wakeup_reason();
-
-  Serial.println("Going to sleep now");
-  Serial.flush();
-  M5.Power.deepSleep(0);
-}
-
 void do_post(String payload) {
   WiFi.begin(ssid, pass);
   Serial.print("connecting to Wifi");
@@ -84,15 +70,27 @@ void do_post(String payload) {
   }
 }
 
-void loop() {
-  M5.update();
-  if (M5.BtnA.wasReleased()) {
+void setup() {
+  M5.begin();
+  M5.Power.begin();
+
+  bootCount = (bootCount + 1) % 2;
+  Serial.println("Boot number:" + String(bootCount));
+
+  print_wakeup_reason();
+
+  if (bootCount) {
     do_post("{\"profile\":{\"status_text\":\"riding a train\",\"status_emoji\":\":train:\"}}");
     Serial.println("slack status was set");
-    delay(1000);
-  } else if (M5.BtnB.wasReleased()) {
+  } else {
     do_post("{\"profile\":{\"status_text\":\"\",\"status_emoji\":\"\"}}");
     Serial.println("slack status was cleared");
-    delay(1000);
   }
+
+  Serial.println("Going to sleep now");
+  Serial.flush();
+  M5.Power.deepSleep(0);
+}
+
+void loop() {
 }
