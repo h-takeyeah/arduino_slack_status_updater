@@ -21,3 +21,6 @@ connect your board and run `make listboard`. port.address is the port
 
 ## notes
 push A button to reset and exit deep-sleep-->
+
+## archived source
+this code was originally intended for M5Stack. checkout the tag **arduino-cli-m5stack-stable** to see them.
