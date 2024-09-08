@@ -1,14 +1,11 @@
-include variables.mk
+# TO USE VSCODE EXTENSION IS STRONGLY RECOMMENDED
 
-ARDUINO := arduino-cli
-CACHE_PATH := cache
-
-DEFINES := "-DWIFI_SSID=\"$(WIFI_SSID)\" -DWIFI_PASS=\"$(WIFI_PASS)\" -DSLACK_USER_TOKEN=\"$(SLACK_USER_TOKEN)\""
+PIO := pio # pio must be in $PATH
 
 .PHONY: all
 all:
-	$(ARDUINO) compile --build-cache-path $(CACHE_PATH) --build-property build.defines=$(DEFINES) --upload --port $(PORT)
+	$(PIO) run --target upload
 
 .PHONY: listboard
 listboard:
-	$(ARDUINO) board list --format yaml
+	$(PIO) device list
