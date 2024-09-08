@@ -1,4 +1,0 @@
-PORT := COM3
-WIFI_SSID := your-ap-ssid
-WIFI_PASS := your-ssid-pass
-SLACK_USER_TOKEN := xoxp-token
