@@ -1,21 +1,3 @@
-#ifdef WIFI_SSID
-const char ssid[] = WIFI_SSID;
-#else
-const char ssid[] = "ssid";
-#endif
-
-#ifdef WIFI_PASS
-const char pass[] = WIFI_PASS;
-#else
-const char pass[] = "pass";
-#endif
-
-#ifdef SLACK_USER_TOKEN
-const char slack_user_token[] = SLACK_USER_TOKEN;
-#else
-const char slack_user_token[] = "xoxp-brabra";
-#endif
-
 // ISRG Root X1 (invalid after 2035/06/04)
 const char root_ca[] = \
   "-----BEGIN CERTIFICATE-----\n" \

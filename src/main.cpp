@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <HTTPClient.h>
-#include <M5Stack.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 
@@ -24,7 +23,7 @@ void print_wakeup_reason(){
 }
 
 void do_post(String payload) {
-  WiFi.begin(ssid, pass);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
   Serial.print("connecting to Wifi");
   unsigned long timeout = millis();
   while (WiFi.status() != WL_CONNECTED) {
@@ -36,7 +35,7 @@ void do_post(String payload) {
     delay(1000);
   }
 
-  Serial.printf("\nconnected to %s\n", ssid);
+  Serial.printf("\nconnected to %s\n", WIFI_SSID);
 
   Serial.println("[HTTPS] begin...");
 
@@ -49,7 +48,7 @@ void do_post(String payload) {
       if (https.begin(*client, "https://slack.com/api/users.profile.set")) {
         https.addHeader("Content-Type", "application/json");
         String auth = "Bearer ";
-        auth += slack_user_token;
+        auth += SLACK_USER_TOKEN;
         https.addHeader("Authorization", auth);
 
         int httpCode = https.POST(payload);
@@ -71,13 +70,15 @@ void do_post(String payload) {
 }
 
 void setup() {
-  M5.begin();
-  M5.Power.begin();
+  Serial.begin(115200);
+  delay(1000);
 
   bootCount = (bootCount + 1) % 2;
   Serial.println("Boot number:" + String(bootCount));
 
   print_wakeup_reason();
+
+  esp_deep_sleep_enable_gpio_wakeup(BIT(D1), ESP_GPIO_WAKEUP_GPIO_LOW);
 
   if (bootCount) {
     do_post("{\"profile\":{\"status_text\":\"riding a train\",\"status_emoji\":\":train:\"}}");
@@ -88,8 +89,7 @@ void setup() {
   }
 
   Serial.println("Going to sleep now");
-  Serial.flush();
-  M5.Power.deepSleep(0);
+  esp_deep_sleep_start();
 }
 
 void loop() {
