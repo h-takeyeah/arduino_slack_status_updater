@@ -1,0 +1,5 @@
+[env:seeed_xiao_esp32c3]
+build_flags =
+  -DWIFI_SSID=\"your-ap-ssid\"
+  -DWIFI_PASS=\"your-ap-pass\"
+  -DSLACK_USER_TOKEN=\"xoxp-token\"
