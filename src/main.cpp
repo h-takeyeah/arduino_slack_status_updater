@@ -25,9 +25,9 @@ void print_wakeup_reason(){
 void do_post(String payload) {
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   Serial.print("connecting to Wifi");
-  unsigned long timeout = millis();
+  unsigned long start_at = millis();
   while (WiFi.status() != WL_CONNECTED) {
-    if (millis() - timeout > 5000) {
+    if (millis() - start_at > 5000) {
       Serial.println("\nfailed to connect to WiFi");
       return;
     }
